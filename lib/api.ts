@@ -1,6 +1,6 @@
 import { NewsArticle } from '@/types/news';
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000/api';
+const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000';
 
 export async function fetchArticles(page: number = 1): Promise<{ articles: NewsArticle[], hasMore: boolean }> {
   try {
