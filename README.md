@@ -1,61 +1,189 @@
-# Just Good News 🌟 - Frontend
+# 🌟 Just Good News
 
-Una plataforma de noticias enfocada en contenido positivo y constructivo para combatir el doomscrolling.
+Una plataforma web que te trae **noticias positivas, inspiradoras y esperanzadoras** directamente a tu pantalla. En un mundo saturado de noticias negativas, **Just Good News** se dedica a curar historias que restauran tu fe en la humanidad.
 
-## 🎯 Características
+## 📰 ¿Qué es Just Good News?
 
-- **Feed de noticias positivas** con diseño limpio y agradable
-- **Conexión a backend en puerto 4000**
-- **Sin publicidad** ni contenido sensacionalista
-- **Diseño responsive** mobile-first
-- **Estados de carga suaves** con skeleton screens
-- **Animaciones cuidadas** con Framer Motion
-- **Bienestar digital** en el centro del diseño
+Just Good News es una aplicación web diseñada para mostrarte las buenas noticias del mundo. Nuestro sistema **recopila automáticamente noticias de fuentes confiables** (como Clarín, BBC, etc.) y utiliza **filtros inteligentes** para identificar y descartar historias negativas, manteniendo solo aquellas que cuentan historias de:
 
-## 🚀 Tecnologías
+- 🚀 **Innovaciones y descubrimientos científicos** que cambiarán el mundo
+- 🌍 **Mejoras ambientales** y proyectos de sostenibilidad
+- 💪 **Historias de resiliencia** y superación personal
+- 🤝 **Actos de solidaridad** y comunidades que se unen
+- 🎓 **Avances en educación** y oportunidades para todos
+- 💚 **Iniciativas de salud y bienestar**
 
-- **Next.js 15** con App Router
-- **React 19**
-- **TypeScript**
-- **Tailwind CSS**
-- **Framer Motion** para animaciones
-- **Google Fonts** (Fraunces + Commissioner)
+## 🎯 Propósito
 
-## 📦 Instalación y Ejecución
+Vivimos en una era donde los medios de comunicación se enfoca constantemente en crímenes, desastres y conflictos. **Just Good News existe para demostrar que también hay razones para ser optimista**. Queremos que empieces tu día leyendo historias que te inspiren, que te hagan sonreír, y que te recuerden que hay mucha bondad en el mundo.
+
+## 🎨 Experiencia del Usuario
+
+- **Interfaz moderna y limpia**: Diseño visual agradable que destaca las historias
+- **Feed infinito**: Desplázate sin límite descubriendo más noticias
+- **Diseño responsive**: Disfruta de las mismas noticias en tu teléfono, tablet o computadora
+- **Animaciones suaves**: Transiciones fluidas que hacen la experiencia más placentera
+- **Artículos completos**: Lee los detalles de cada historia y accede a la fuente original
+
+## 🚀 Requisitos
+
+- Node.js 18+ 
+- npm o yarn
+
+## 📦 Instalación
 
 ```bash
+# Clonar el repositorio
+git clone https://github.com/JulianGarbate/just-good-news.git
+cd just-good-news
+
 # Instalar dependencias
 npm install
 
-# Modo desarrollo (puerto 3000 por defecto)
+# Crear archivo .env.local
+cat > .env.local << EOF
+NEXT_PUBLIC_API_URL=http://localhost:4000/api
+EOF
+
+# Iniciar en desarrollo
+npm run dev
+```
+
+La aplicación estará disponible en `http://localhost:3000`
+
+## 🏗️ Estructura del Proyecto
+
+```
+src/
+├── app/                    # Rutas y layout de Next.js
+│   ├── page.tsx           # Home - Feed principal
+│   ├── layout.tsx         # Layout global
+│   └── news/
+│       └── [id]/
+│           └── page.tsx   # Detalle de artículo
+├── components/            # Componentes React
+│   ├── NewsCard.tsx       # Card de noticia
+│   ├── Header.tsx         # Encabezado
+│   ├── EmptyState.tsx     # Estado vacío
+│   └── SkeletonCard.tsx   # Skeleton loader
+├── lib/                   # Utilidades
+│   └── api.ts            # Funciones de API
+└── types/                 # Tipos TypeScript
+    └── news.ts           # Tipos de noticias
+```
+
+### Endpoints principales
+
+- `GET /news?page=1&limit=6` - Obtener noticias paginadas
+- `GET /news/:id` - Obtener detalle de noticia
+- `GET /news/categoria/:categoria` - Filtrar por categoría
+
+## 🛠️ Desarrollo
+
+```bash
+# Modo desarrollo con hot reload
 npm run dev
 
 # Build para producción
 npm run build
 
 # Iniciar servidor de producción
-npm start
+npm run start
+
+# Linting y type checking
+npm run lint
 ```
 
-La aplicación estará disponible en `http://localhost:3000`
+## 📋 Tecnologías
 
-## 🔌 Configuración del Backend
+- **Next.js 15**: Framework React con SSR
+- **TypeScript**: Tipado estático
+- **Tailwind CSS**: Estilos utility-first
+- **Framer Motion**: Animaciones suaves
+- **Vercel/Next Image**: Optimización de imágenes
 
-El frontend está **configurado para conectarse al puerto 4000** automáticamente.
+## 🔗 Backend
 
-### Variables de Entorno
+El frontend requiere el servidor backend ejecutándose. Ver: [just-good-news-backend](https://github.com/JulianGarbate/just-good-news-backend)
 
-El archivo `.env.local` ya está configurado:
+```bash
+# Inicia el backend
+cd ../back
+npm run dev
+```
 
-```env
+## 🌐 Deployment
+
+### Vercel (recomendado para Next.js)
+
+```bash
+npm install -g vercel
+vercel
+```
+
+### Docker
+
+```dockerfile
+FROM node:18-alpine
+WORKDIR /app
+COPY . .
+RUN npm install
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]
+```
+
+## 📝 Variables de Entorno
+
+Crear archivo `.env.local`:
+
+```
 NEXT_PUBLIC_API_URL=http://localhost:4000/api
 ```
 
-Si necesitas cambiar la URL del backend, edita este archivo.
+**Nota**: Cualquier variable prefijada con `NEXT_PUBLIC_` es accesible en el navegador.
 
-## 📡 Endpoints Requeridos del Backend
+## 🐛 Troubleshooting
 
-Tu backend debe estar corriendo en `http://localhost:4000` e implementar:
+### "No se encuentran noticias"
+- Verifica que el backend esté corriendo en `http://localhost:4000`
+- Comprueba la variable de entorno `NEXT_PUBLIC_API_URL`
+- Revisa los logs del backend para errores
+
+### "Imágenes no cargan"
+- El backend podría no estar enviando `imageUrl` válido
+- Se muestra un placeholder automáticamente si no hay imagen
+
+### "Error de compilación"
+```bash
+# Limpia cache y reinstala
+rm -rf .next node_modules
+npm install
+npm run dev
+```
+
+## 👨‍💻 Contribuir
+
+Las contribuciones son bienvenidas. Por favor:
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la licencia ISC.
+
+## 📧 Contacto
+
+**Autor**: Julian Garbate  
+**GitHub**: [@JulianGarbate](https://github.com/JulianGarbate)
+
+---
+
+Hecho con ❤️ para difundir buenas noticias
 
 ### 1. Listar Artículos (con paginación)
 
